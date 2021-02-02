@@ -1,19 +1,17 @@
 module.exports = {
-  plugins: [
-    "tailwindcss",
-    process.env.NODE_ENV === "production"
-      ? [
-          "@fullhuman/postcss-purgecss",
-          {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+    ...(process.env.NODE_ENV === 'production'
+      ? {
+          '@fullhuman/postcss-purgecss': {
             content: [
-              "./pages/**/*.{js,jsx,ts,tsx}",
-              "./components/**/*.{js,jsx,ts,tsx}",
+              './components/**/*.js',
+              './pages/**/*.js'
             ],
-            defaultExtractor: (content) =>
-              content.match(/[\w-/:]+(?<!:)/g) || [],
-          },
-        ]
-      : undefined,
-    "autoprefixer",
-  ],
+            defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
+          }
+        }
+      : {})
+  }
 };
